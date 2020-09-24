@@ -1,62 +1,9 @@
-// class book{
-//     constructor(title, author, isbn){
-//         this.title = title;
-//         this.author = author;
-//         this.isbn = isbn;
-//     }
-// }
 
-// class ui{
-//     static displaybooks(){
-//         const storedBooks= [
-//             {
-//                 title: 'book one',
-//                 author: 'Israel',
-//                 isbn: 1231,
-//             },
-//             {
-//                 title: 'book two',
-//                 author: 'Isaac',
-//                 isbn: 1233,
-//             },
-//             {
-//                 title: 'book three',
-//                 author: 'Israelite',
-//                 isbn: 1233,
-//             }
-//         ];
-
-//         const books = storedBooks;
-//         books.forEach((book) => ui.addBookslist(book));
-//     }
-
-//     static addBookslist(book)
-
-
-// {
-//     const list = document.querySelector('#book-list');
-//     const row = document.createElement('tr');
-
-//     row.innerHTML =
-//     '
-//         <td>${book.title}</td>
-//         <td>${book.author}</td>
-//         <td>${book.isbn}</td>
-//     <td><a href = "#" class = "btn-d  conste">X</a></td>';
-//     list.appendChild(row);
-// }
-
-
-//Book constructor
-
-class Book {
-  constructor(title, author, isbn) {
-    this.title = title;
-    this.author = author;
-    this.isbn = isbn;
-  }
+function Book(title, author, isbn) {
+  this.title = title;
+  this.author = author;
+  this.isbn = isbn;
 }
-
 // Ui constructor
 
 function UI() {}
@@ -72,7 +19,7 @@ UI.prototype.addBookToList = function(book) {
   <td>${book.title}</td>
   <td>${book.author}</td>
   <td>${book.isbn}</td>
-  <td><a href = "#" class = "delete">X</a></td>
+  <td><a href = "#" class = "delete" >X</a></td>
   `;
 
   list.appendChild(row);
@@ -106,6 +53,15 @@ UI.prototype.showAlert = function(message, className) {
     document.querySelector('.alert').remove();
   }, 3000);
 }
+// Delete Book
+UI.prototype.deleteBook = function(target){
+  if(target.className === "delete"){
+    console.log('hello');
+    target.parentElement.parentElement.remove();
+  }
+}
+
+
 // clear fields
 
 
@@ -129,7 +85,7 @@ document.getElementById('book-form').addEventListener('submit', function(e) {
 
   // Instantiate UI
   const ui = new UI();
-
+  
   //validation
   if (title === '' || author === '' || isbn === '') {
     //Error Alert 
@@ -148,3 +104,21 @@ document.getElementById('book-form').addEventListener('submit', function(e) {
   e.preventDefault();
 
 });
+
+// event listener for delete
+document.getElementById('book-list').addEventListener(
+  'click', function(e){
+
+
+  // Instantiate UI
+  const ui = new UI();
+
+  // Delete Book
+  ui.deleteBook(e.target);
+
+  // Show message
+  ui.showAlert('Book Removed!', 'success');
+
+  e.preventDefault();
+  }
+)
